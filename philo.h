@@ -27,21 +27,22 @@ typedef struct	s_philo
 }	t_philo;
 
 //Funcion para obtener la hora.
-long	get_time();
+long int	get_time();
 
 //Utilidades
-int		ft_atou(char *str);
-void	print_state(t_table *table, t_philo *philo);
+int			ft_atou(char *str);
+void		print_state(t_table *table, t_philo *philo);
 
 //Funciones para inicializar el estado del recurso compartido
-t_table	table_atributes_init(int argc, char **argv);
-t_philo	*philo_init(t_table *table);
-void	threads_locks_allocate(t_table *table, t_philo *philo);
-void	threads_locks_init(t_table *table, t_philo *philo);
+void		table_atributes_init(t_table *table, int argc, char **argv);
+void		philo_init(t_table *table, t_philo *philo);
+void		threads_locks_allocate(t_table *table, t_philo *philo);
+void		threads_locks_init(t_table *table, t_philo *philo);
+
 //Funciones para limpiar 
-void	clean(t_table *table, t_philo *philo, int flag);
-void	threads_locks_clean(t_table *table, t_philo *philo, int it_t, int it_l);
-void	threads_locks_destroy(t_table *table, t_philo *philo, int it_t, int it_l);
+void		clean(t_table *table, t_philo *philo, int flag);
+void		threads_locks_clean(t_table *table, t_philo *philo, int it_t, int it_l);
+void		threads_locks_destroy(t_table *table, t_philo *philo, int it_t, int it_l);
 
 //Funcion a ejecutar
 void	*routine(void *arg);
