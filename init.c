@@ -23,10 +23,10 @@ void	philo_init(t_table *table, t_philo *philo)
 	int	nphilo;
 	int	*forks;
 
+	nphilo = table->n_philo;
 	forks = (int *) malloc(sizeof(int) * nphilo);
 	if (forks)
 	{
-		nphilo = table->n_philo;
 		while (nphilo)
 		{
 			philo[nphilo].table = table;
@@ -54,6 +54,7 @@ void	threads_init(t_table *table, t_philo *philo)
 	int			nphilo;
 
 	nphilo = table->n_philo;
+	threads = table->threads;
 	while (nphilo)
 	{
 		if (pthread_create(threads + nphilo, NULL, routine, philo + nphilo))
@@ -69,6 +70,7 @@ void	locks_init(t_table *table, t_philo *philo)
 	pthread_mutex_t	*locks;
 	int				nphilo;
 
+	locks = table->locks;
 	nphilo = table->n_philo;
 	while (nphilo)
 	{

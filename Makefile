@@ -2,7 +2,7 @@ SRCS	=	$(wildcard	*.c)
 OBJS	=	$(SRCS:.o=.c)
 CC		= clang
 RM		= rm -rf
-CFLAGS	= -Wall -Werror -Wextra -fsanitize=address -fsanitize=thread
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=thread
 LFLAGS	= -pthread
 NAME	= philo
 
