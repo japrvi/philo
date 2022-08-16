@@ -1,6 +1,4 @@
 #include "philo.h"
-#include <bits/pthreadtypes.h>
-#include <pthread.h>
 
 void	table_atributes_init(t_table *table, int argc, char **argv)
 {
@@ -29,11 +27,12 @@ void	philo_init(t_table *table, t_philo *philo)
 	if (forks)
 	{
 		nphilo = table->n_philo;
-		while (nphilo--)
+		while (nphilo)
 		{
 			philo[nphilo].table = table;
 			philo[nphilo].id = nphilo;
 			philo[nphilo].time = get_time();
+			nphilo--;
 		}
 	}
 }
@@ -55,13 +54,28 @@ void	threads_init(t_table *table, t_philo *philo)
 	int			nphilo;
 
 	nphilo = table->n_philo;
-	while (nphilo--)
+	while (nphilo)
 	{
 		if (pthread_create(threads + nphilo, NULL, routine, philo + nphilo))
-			threads_destroy(threads, nphilo);
+			threads_destroy(table, philo, nphilo);
+		nphilo--;
 	}
+	if (pthread_create(threads, NULL, check_dead, &philo))
+			threads_destroy(table, philo, 0);
 }
 
 void	locks_init(t_table *table, t_philo *philo)
 {
+	pthread_mutex_t	*locks;
+	int				nphilo;
+
+	nphilo = table->n_philo;
+	while (nphilo)
+	{
+		if (pthread_mutex_init(locks + nphilo, NULL))
+			locks_destroy(table, philo, nphilo);
+		nphilo--;
+	}
+	if (pthread_mutex_init(locks, NULL))
+		locks_destroy(table, philo, 0);
 }
