@@ -15,6 +15,7 @@ typedef struct	s_table
 	int				t_sleep;
 	int				n_eats;
 	int				*forks;
+	int				dead;
 	pthread_t		*threads;
 	pthread_mutex_t	*locks;
 }	t_table;
@@ -22,7 +23,6 @@ typedef struct	s_table
 typedef struct	s_philo
 {
 	int			id;
-	int			alive;
 	long int	time;
 	t_table		*table;
 }	t_philo;
@@ -42,11 +42,9 @@ void		threads_locks_init(t_table *table, t_philo *philo);
 
 //Funciones para limpiar 
 void		clean(t_table *table, t_philo *philo, int flag);
-void		threads_locks_clean(t_table *table, t_philo *philo, int it_t, int it_l);
-void		threads_destroy(t_table *table, t_philo *philo, int pos);
 void		locks_destroy(t_table *table, t_philo *philo, int pos);
 
 //Funcion a ejecutar
-void	*routine(void *arg);
-void	*check_dead(void *arg);
+void		*routine(void *arg);
+void		*check_dead(void *arg);
 #endif

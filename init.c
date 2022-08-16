@@ -57,11 +57,11 @@ void	threads_init(t_table *table, t_philo *philo)
 	while (nphilo)
 	{
 		if (pthread_create(threads + nphilo, NULL, routine, philo + nphilo))
-			threads_destroy(table, philo, nphilo);
+			clean(table, philo, 0);
 		nphilo--;
 	}
 	if (pthread_create(threads, NULL, check_dead, &philo))
-			threads_destroy(table, philo, 0);
+			clean(table, philo, 0);
 }
 
 void	locks_init(t_table *table, t_philo *philo)

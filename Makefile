@@ -6,12 +6,13 @@ CFLAGS	= -Wall -Werror -Wextra -fsanitize=addres -fsanitize=thread
 LFLAGS	= -pthread
 NAME	= philo
 
+all: 	${NAME}
 
 clean:
 	${RM} ${OBJS}
 
 fclean:	clean
-	${RM} 
+	${RM} ${NAME} 
 
 %.o	:	%.co
 	$(CC) $(CFLAGS) -c $< -o $@
