@@ -38,13 +38,15 @@ void		print_state(t_table *table, t_philo *philo);
 void		table_atributes_init(t_table *table, int argc, char **argv);
 void		philo_init(t_table *table, t_philo *philo);
 void		threads_locks_allocate(t_table *table, t_philo *philo);
-void		threads_locks_init(t_table *table, t_philo *philo);
+void		threads_init(t_table *table, t_philo *philo);
+void		locks_init(t_table *table, t_philo *philo);
 
 //Funciones para limpiar 
 void		clean(t_table *table, t_philo *philo, int flag);
 void		locks_destroy(t_table *table, t_philo *philo, int pos);
 
 //Funcion a ejecutar
-void		*routine(void *arg);
-void		*check_dead(void *arg);
+void		*routine(__attribute((unused)) void *arg);
+void		*check_dead(__attribute((unused)) void *arg);
+
 #endif
