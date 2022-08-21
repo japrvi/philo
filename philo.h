@@ -36,7 +36,7 @@ void		print_state(t_table *table, t_philo *philo);
 
 //Funciones para inicializar el estado del recurso compartido
 void		table_atributes_init(t_table *table, int argc, char **argv);
-void		philo_init(t_table *table, t_philo *philo);
+void		philo_init(t_table *table, t_philo **philo);
 void		threads_locks_allocate(t_table *table, t_philo *philo);
 void		threads_init(t_table *table, t_philo *philo);
 void		locks_init(t_table *table, t_philo *philo);

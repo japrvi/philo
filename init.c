@@ -1,15 +1,16 @@
 #include "philo.h"
+#include <unistd.h>
 
 void	table_atributes_init(t_table *table, int argc, char **argv)
 {
-	if (argc == 4 || argc == 5)
+	if (argc == 5 || argc == 6)
 	{
-		table->n_philo = ft_atou(argv[0]);
-		table->t_die = ft_atou(argv[1]);
-		table->t_eat = ft_atou(argv[2]);
-		table->t_sleep = ft_atou(argv[3]);
-		if (argc == 5)
-			table->n_eats = ft_atou(argv[4]); 
+		table->n_philo = ft_atou(argv[1]);
+		table->t_die = ft_atou(argv[2]);
+		table->t_eat = ft_atou(argv[3]);
+		table->t_sleep = ft_atou(argv[4]);
+		if (argc == 6)
+			table->n_eats = ft_atou(argv[5]); 
 	}
 	else
 	{
@@ -18,7 +19,7 @@ void	table_atributes_init(t_table *table, int argc, char **argv)
 	}
 }
 
-void	philo_init(t_table *table, t_philo *philo)
+void	philo_init(t_table *table, t_philo **philo)
 {
 	int	nphilo;
 	int	*forks;
@@ -27,21 +28,29 @@ void	philo_init(t_table *table, t_philo *philo)
 	forks = (int *) malloc(sizeof(int) * nphilo);
 	if (forks)
 	{
-		while (nphilo)
+		table->forks = forks;
+		*philo = (t_philo *) malloc(sizeof(t_philo) * (nphilo));
+		if (*philo)
 		{
-			philo[nphilo].table = table;
-			philo[nphilo].id = nphilo;
-			philo[nphilo].time = get_time();
-			nphilo--;
+			while (nphilo-- >= 1)
+			{
+				(*philo)[nphilo].table = table;
+				(*philo)[nphilo].id = nphilo;
+				(*philo)[nphilo].time = get_time();
+			}
 		}
+		else
+			clean(table, *philo, 1);
 	}
+	else 
+		clean(table, *philo, 0);
 }
 
 void	threads_locks_allocate(t_table *table, t_philo *philo)
 {
 	table->threads = (pthread_t *) malloc(sizeof(pthread_t) * (table->n_philo + 1));
 	table->locks = (pthread_mutex_t *) malloc(sizeof(pthread_t) * (table->n_philo + 1));
-	if (table->threads || table->locks)
+	if (!table->threads || !table->locks)
 	{
 		printf("ALLOCATING ERROR\n");
 		clean(table, philo, 0);

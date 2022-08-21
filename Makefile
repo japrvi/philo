@@ -1,7 +1,7 @@
 SRCS	=	$(wildcard	*.c)
-OBJS	=	$(SRCS:.o=.c)
+OBJS	=	$(SRCS:.c=.o)
 CC		= clang
-RM		= rm -rf
+RM		= rm -f
 CFLAGS	= -Wall -Werror -Wextra -fsanitize=thread
 LFLAGS	= -pthread
 NAME	= philo
@@ -14,10 +14,11 @@ clean:
 fclean:	clean
 	${RM} ${NAME} 
 
-%.o	:	%.co
+%.o	:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME)	:	$(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $(LFLAGS) -o $(NAME)
 
+re: fclean all
 .PHONY:	all clean fclean re

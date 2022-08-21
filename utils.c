@@ -1,10 +1,8 @@
 #include "philo.h"
-#include <bits/types/struct_timeval.h>
-#include <sys/time.h>
 
 static int	isNumeric(char c)
 {
-	return (c >= '0' || c <= '9');
+	return (c >= '0' && c <= '9');
 }
 
 void	print_state(t_table *table, t_philo *philo)
@@ -16,10 +14,12 @@ void	print_state(t_table *table, t_philo *philo)
 	printf("Time to sleep: %d\n", table->t_sleep);
 	printf("Times must eat: %d\n", table->n_eats);
 	printf("Philo info %p\n", philo);
+	printf("Dead = %i\n", table->dead);
 	for (int i = 0; i < table->n_philo; i++)
 	{
-		printf("ID: %d\tTIME: %li\t", philo[i].id, (get_time() - philo[i].time));
+		printf("ID: %d\tTIME: %li\t TABLE:%p\n", philo[i].id, (get_time() - philo[i].time), philo[i].table);
 	}
+	printf("LOCKS: %p\t THREADS: %p\t", table->threads, table->locks);
 }
 
 int	ft_atou(char *str)
@@ -31,7 +31,7 @@ int	ft_atou(char *str)
 	if (isNumeric(str[0]))
 	{
 		i = 0;
-		while (isNumeric(str[i]))
+		while (isNumeric(str[i]) && str[i])
 		{
 			res = res * 10 + (str[i] - '0');
 			i++;
